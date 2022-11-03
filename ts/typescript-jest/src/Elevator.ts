@@ -1,18 +1,42 @@
+enum direction {
+    up = "UP",
+    down = "DOWN"
+}
+
+class Motor {
+    getUp() {};
+    getDown() {};
+}
+
 export class Elevator {
-    floor: number;
-    isMoving: boolean
+    private floor: number;
+    private isMoving: boolean
+    private actions: {source: number, destination: number}[];
 
-
-    enum direction {
-        up = "UP",
-        down = "DOWN"
+    constructor () {
+        this.floor = 0;
+        this.isMoving = false;
+        this.actions = [];
     }
 
-    public call(source: number, destination: number)  {
+    getFloor() {
+        return this.floor;
+    };
+
+    getUp() {};
+    getDown() {};
+
+    public call(destination: number)  {
         if (destination - source < 0 ) {
             // go down
         } else {
             // go up
+        }
+    }
+
+    run () {
+        while (this.actions.length > 0) {
+            this.run()
         }
     }
 }
