@@ -1,22 +1,20 @@
-enum direction {
-    up = "UP",
-    down = "DOWN"
-}
+interface motorOrder {
+    goUp()
 
-class Motor {
-    public getUp() {}
-    public getDown() {}
+    goDown()
 }
 
 export class Elevator {
     private floor: number
     private isMoving: boolean
     private actions: Array<{source: number, destination: number}>
+    private motorOrder: motorOrder
 
-    constructor() {
+    constructor(motorOrd: motorOrder) {
         this.floor = 0
         this.isMoving = false
         this.actions = []
+        this.motorOrder = motorOrd;
     }
 
     public getFloor() {
@@ -31,10 +29,12 @@ export class Elevator {
 
     private goUp() {
         this.floor = this.floor + 1
+        this.motorOrder.goUp();
     }
 
     private goDown() {
         this.floor = this.floor - 1
+        this.motorOrder.goDown();
     }
 
     private run() {
