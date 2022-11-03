@@ -2,6 +2,8 @@ interface motorOrder {
     goUp()
 
     goDown()
+
+    openDoors()
 }
 
 export class Elevator {
@@ -11,14 +13,18 @@ export class Elevator {
     private motorOrder: motorOrder
 
     constructor(motorOrd: motorOrder) {
-        this.floor = 0
-        this.isMoving = false
-        this.actions = []
+        this.floor = 0;
+        this.isMoving = false;
+        this.actions = [];
         this.motorOrder = motorOrd;
     }
 
     public getFloor() {
-        return this.floor
+        return this.floor;
+    }
+
+    openDoors() {
+        
     }
 
     public call(source: number, destination: number)  {
@@ -28,12 +34,12 @@ export class Elevator {
     }
 
     private goUp() {
-        this.floor = this.floor + 1
+        this.floor = this.floor + 1;
         this.motorOrder.goUp();
     }
 
     private goDown() {
-        this.floor = this.floor - 1
+        this.floor = this.floor - 1;
         this.motorOrder.goDown();
     }
 
