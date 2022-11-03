@@ -24,20 +24,33 @@ export class Elevator {
     }
 
     public call(source: number, destination: number)  {
-        this.actions.push({source, destination})
+        this.actions.push({source, destination});
+        if (this.actions.length === 1)
+            this.run();
     }
 
-    private getUp() {
+    private goUp() {
         this.floor = this.floor + 1
     }
 
-    private getDown() {
+    private goDown() {
         this.floor = this.floor - 1
     }
 
     private run() {
         while (this.actions.length > 0) {
-            this.run()
+            const action = this.actions.shift();
+            this.goToFloor(action.source);
+            this.goToFloor(action.destination);
+        }
+    }
+
+    private goToFloor(source: number) {
+        while (this.floor != source) {
+            if (this.floor > source)
+                this.goDown();
+            else
+                this.goUp();
         }
     }
 }
