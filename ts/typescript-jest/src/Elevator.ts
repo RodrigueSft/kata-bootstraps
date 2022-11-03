@@ -3,6 +3,8 @@ interface motorOrder {
 
     goDown()
 
+    closeDoors()
+
     openDoors()
 }
 
@@ -11,20 +13,28 @@ export class Elevator {
     private isMoving: boolean
     private actions: Array<{source: number, destination: number}>
     private motorOrder: motorOrder
+    private areDoorsOpen: boolean
 
     constructor(motorOrd: motorOrder) {
         this.floor = 0;
         this.isMoving = false;
         this.actions = [];
         this.motorOrder = motorOrd;
+        this.areDoorsOpen = false;
     }
 
     public getFloor() {
         return this.floor;
     }
 
-    openDoors() {
-        
+    private closeDoors() {
+        this.areDoorsOpen = false;
+        this.motorOrder.closeDoors();
+    }
+
+    private openDoors() {
+        this.areDoorsOpen = true;
+        this.motorOrder.openDoors();
     }
 
     public call(source: number, destination: number)  {
@@ -46,13 +56,17 @@ export class Elevator {
     private run() {
         while (this.actions.length > 0) {
             const action = this.actions.shift();
+            this.closeDoors();
             this.goToFloor(action.source);
+            this.openDoors();
+            this.closeDoors();
             this.goToFloor(action.destination);
+            this.openDoors();
         }
     }
 
     private goToFloor(source: number) {
-        while (this.floor != source) {
+        while (this.floor !== source) {
             if (this.floor > source)
                 this.goDown();
             else
@@ -60,3 +74,5 @@ export class Elevator {
         }
     }
 }
+
+
